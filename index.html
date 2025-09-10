@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Scrapbook</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fdf6f0;
+      font-family: 'Roboto', sans-serif;;
+    }
+    .loader {
+      text-align: center;
+    }
+    .loading-text {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #444;
+    }
+    .emoji {
+      font-size: 50px;
+      animation: bounce 1s infinite;
+      display: inline-block;
+    }
+    .my-name {
+      margin-top: 10px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #2c3e50;
+      letter-spacing: 2px;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    .progress {
+      margin-top: 20px;
+      height: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loader">
+    <div class="emoji" id="emoji">🐶</div>
+    <div class="my-name">Marc Clayton</div>
+    <div class="loading-text">Membuka scrapbook kenangan...</div>
+    <div class="progress w-75 mx-auto">
+      <div id="progressBar"
+           class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+           role="progressbar" style="width: 0%">0%</div>
+    </div>
+  </div>
+ 
+  <script>
+    
+    let progress = 0;
+    const progressBar = document.getElementById("progressBar");
+    const duration = 7500;  // 
+    const interval = 150;  
+    const step = 100 / (duration / interval);
+
+    const timer = setInterval(() => {
+      progress += step;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(timer);
+        
+        window.location.href = "home.html"; 
+      }
+      progressBar.style.width = progress + "%";
+      progressBar.innerText = Math.floor(progress) + "%";  
+    }, interval);
+
+    
+    const emojiEl = document.getElementById("emoji");
+    const emojis = ["🐶", "🐱", "🐰", "🐹"]; 
+    let index = 0;
+
+    emojiEl.addEventListener("animationiteration", () => {
+      index = (index + 1) % emojis.length;
+      emojiEl.textContent = emojis[index];
+    });
+  </script>
+</body>
+</html>
+
